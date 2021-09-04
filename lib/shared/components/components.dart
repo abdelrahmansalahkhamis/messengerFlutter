@@ -1,29 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:messenger_app_flutter/modules/news_app/web_view/web_view.dart';
 import 'package:messenger_app_flutter/shared/cubit/cubit.dart';
-
-// Widget defaultButton(
-//         @required bool isUpperCased,
-//         @required double width,
-//         @required Color background,
-//         @required VoidCallback function,
-//         @required String text,
-//         @required double raduis) =>
-//     Container(
-//       color: background,
-//       width: width,
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(raduis),
-//       ),
-//       child: MaterialButton(
-//         onPressed: function,
-//         child: Text(
-//           text.toUpperCase(),
-//           style: TextStyle(
-//             color: Colors.white,
-//           ),
-//         ),
-//       ),
-//     );
 
 Widget defaultButton(
         Color background, VoidCallback function, String text, double raduis,
@@ -57,13 +35,13 @@ Widget defaultTextFormField(
         @required bool isClickable,
         @required String? Function(String? value) validate,
         @required Function onSubmit,
-        @required Function onChange,
+        @required void Function(String? value) onChange,
         @required Function onTap,
         @required VoidCallback suffixPressed) =>
     TextFormField(
       controller: controller,
       validator: validate,
-      onChanged: onChange(),
+      onChanged: onChange,
       keyboardType: type,
       obscureText: isPassword,
       enabled: isClickable,
@@ -155,5 +133,94 @@ Widget buildTaskItem(Map model, context) {
   );
 }
 
+//Widget tasksBuilder(List<Map> tasks) =>
 
-//Widget tasksBuilder(List<Map> tasks) => 
+Widget buildArticleItems(article, context, {isSearch = false}) => InkWell(
+      onTap: () {
+        navigateTo(context, WebViewScreen(article['url']));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Container(
+            width: 120.0,
+            height: 120.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
+                image: DecorationImage(
+                    image: NetworkImage('${article['urlToImage']}'),
+                    fit: BoxFit.cover)),
+          ),
+          SizedBox(
+            width: 15.0,
+          ),
+          Expanded(
+            child: Container(
+              height: 120.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${article['title']}',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      // style: TextStyle(
+                      //   fontSize: 18.0,
+                      //   fontWeight: FontWeight.w600,
+                      // ),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                  Text(
+                    '${article['publishedAt']}',
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+          )
+        ]),
+      ),
+    );
+
+void navigateTo(context, widget) =>
+    Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+
+void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
+    context, MaterialPageRoute(builder: (context) => widget), (route) => false);
+
+Widget defaultTextButton(VoidCallback function, String text) =>
+    TextButton(onPressed: function, child: Text(text));
+
+void showToast(String text, ToastState state) {
+  Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: chooseToastColor(state),
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+enum ToastState { SUCCESS, ERROR, WARNING }
+
+Color chooseToastColor(ToastState state) {
+  Color color;
+  switch (state) {
+    case ToastState.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastState.WARNING:
+      color = Colors.amber;
+      break;
+    case ToastState.ERROR:
+      color = Colors.red;
+      break;
+  }
+  return color;
+}

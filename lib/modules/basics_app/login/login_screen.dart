@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       return null;
                     }
-                  }, () {}, () {}, () {}, () {}),
+                  }, () {}, (value) {}, () {}, () {}),
                   SizedBox(
                     height: 15.0,
                   ),
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       () {},
-                      () {},
+                      (value) {},
                       () {},
                       () {
                         setState(() {

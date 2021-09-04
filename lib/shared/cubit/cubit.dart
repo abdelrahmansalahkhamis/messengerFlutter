@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:messenger_app_flutter/modules/archived_tasks/archived_tasks_screen.dart';
-import 'package:messenger_app_flutter/modules/done_tasks/done_tasks_screen.dart';
-import 'package:messenger_app_flutter/modules/new_tasks/new_task_screen.dart';
+import 'package:messenger_app_flutter/modules/todo_app/archived_tasks/archived_tasks_screen.dart';
+import 'package:messenger_app_flutter/modules/todo_app/done_tasks/done_tasks_screen.dart';
+import 'package:messenger_app_flutter/modules/todo_app/new_tasks/new_task_screen.dart';
 import 'package:messenger_app_flutter/shared/cubit/states.dart';
+import 'package:messenger_app_flutter/shared/network/local/cache_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -138,5 +139,22 @@ class AppCubit extends Cubit<AppStates> {
     fabIcon = icon;
 
     emit(AppChangeBottomSheetState());
+  }
+
+  bool isDark = false;
+  void changeAppMode(bool? fromShared) {
+    if (fromShared != null) {
+      isDark = fromShared;
+      emit(AppChangeModeState());
+    } else {
+      isDark = !isDark;
+      CacheHelper.putBoolean('isDark', isDark).then((value) {
+        emit(AppChangeModeState());
+      });
+    }
+    // isDark = !isDark;
+    // CacheHelper.putBoolean('isDark', isDark).then((value) {
+    //   emit(AppChangeModeState());
+    // });
   }
 }

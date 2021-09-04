@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:messenger_app_flutter/modules/counter/cubit/cubit.dart';
+import 'package:messenger_app_flutter/modules/counter_app/counter/cubit/cubit.dart';
 
 import 'cubit/states.dart';
 
