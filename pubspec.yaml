@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: ^2.0.0+3
   intl: ^0.17.0
-  #conditional_builder: ^1.0.2
+  conditional_builder: ^1.0.2
   bloc: ^7.1.0
   flutter_bloc: ^7.2.0
   dio: ^4.0.0
@@ -46,6 +46,7 @@ dependencies:
   webview_flutter: ^2.0.12
   smooth_page_indicator: ^1.0.0+2
   fluttertoast: ^8.0.8
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

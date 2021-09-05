@@ -11,6 +11,7 @@ import 'package:messenger_app_flutter/layout/shop_app/shop_layout.dart';
 import 'package:messenger_app_flutter/layout/todo_app/news_app/news_layout.dart';
 import 'package:messenger_app_flutter/messenger_screen.dart';
 import 'package:messenger_app_flutter/modules/basics_app/login/login_screen.dart';
+import 'package:messenger_app_flutter/modules/shop_app/login/cubit/cubit.dart';
 import 'package:messenger_app_flutter/modules/shop_app/login/shop_login_screen.dart';
 import 'package:messenger_app_flutter/shared/cubit/cubit.dart';
 import 'package:messenger_app_flutter/shared/cubit/states.dart';
@@ -20,6 +21,7 @@ import 'package:messenger_app_flutter/shared/styles/themes.dart';
 import 'package:messenger_app_flutter/users.dart';
 
 import 'bmi_screen.dart';
+import 'layout/shop_app/cubit/shop_cubit.dart';
 import 'layout/todo_app/todo_layout.dart';
 import 'modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'shared/bloc_observer.dart';
@@ -40,7 +42,7 @@ void main() async {
       print('token not null :- $token');
       widget = ShopLayout();
     } else {
-      print('token is null :- $token');
+      print('token else is null :- $token');
       widget = ShopLoginScreen();
     }
   } else {
@@ -64,7 +66,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (BuildContext context) => NewsCubit()..getBusiness()),
-        BlocProvider(create: (context) => AppCubit()..changeAppMode(isDark))
+        BlocProvider(create: (context) => AppCubit()..changeAppMode(isDark)),
+        BlocProvider(create: (context) => ShopCubit()..getHomeData())
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {

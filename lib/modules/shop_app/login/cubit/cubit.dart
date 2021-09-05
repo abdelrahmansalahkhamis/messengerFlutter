@@ -18,8 +18,11 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     emit(ShopLoginLoadingState());
     DioHelper.postData(url: LOGIN, data: {'email': email, 'password': password})
         .then((value) {
-      print(value.data);
+      print('login operation is : $value');
+      print('value.data is ${value.data}');
+      print('loginModel 1 is is is $loginModel');
       loginModel = ShopLoginModel.fromJson(value.data);
+      print('loginModel 2 is is is $loginModel');
       print(loginModel!.status);
       print('-----------');
       print(loginModel!.message);
@@ -38,11 +41,10 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
 
   void changePasswordVisibility() {
     //suffix = Icons.visibility_off_outlined;
-
+    isPassword = !isPassword;
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    isPassword = !isPassword;
+
     emit(ShopChangePasswordVisibilityState());
-    print('------ShopChangePasswordVisibilityState-----');
   }
 }

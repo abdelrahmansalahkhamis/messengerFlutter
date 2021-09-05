@@ -1,15 +1,13 @@
 import 'package:messenger_app_flutter/models/shop_app/login_model.dart';
 
-abstract class ShopLoginStates {
-  get loginModel => null;
-}
+abstract class ShopLoginStates {}
 
 class ShopLoginInitialState extends ShopLoginStates {}
 
 class ShopLoginLoadingState extends ShopLoginStates {}
 
 class ShopLoginSuccessState extends ShopLoginStates {
-  ShopLoginModel loginModel;
+  final ShopLoginModel loginModel;
   ShopLoginSuccessState(this.loginModel);
 }
 

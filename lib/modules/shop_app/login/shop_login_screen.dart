@@ -20,44 +20,28 @@ class ShopLoginScreen extends StatelessWidget {
       create: (context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
         listener: (context, state) {
-          print('state is : $state');
           // TODO: implement listener
           if (state is ShopLoginSuccessState) {
-            print('state is ShopLoginSuccessState');
+            // CacheHelper.saveData('token', state.loginModel.data.token)
+            //     .then((value) {
+            //   navigateAndFinish(context, ShopLayout());
+            // });
+            print('state of ShopLoginSuccessState is $state');
             if (state.loginModel.status) {
-              print('state is ShopLoginSuccessState true true');
+              print('state of state.loginModel.status is $state');
               CacheHelper.saveData('token', state.loginModel.data.token)
                   .then((value) {
                 navigateAndFinish(context, ShopLayout());
               });
+              print(state.loginModel.message);
+              print(state.loginModel.data.token);
+              //showToast(state.loginModel.message, ToastState.SUCCESS);
+            } else {
+              print('state of state.loginModel.status.false is $state');
+              print(state.loginModel.message);
+              showToast(state.loginModel.message, ToastState.ERROR);
             }
-          } else {
-            print('state.loginModel.message is ${state.loginModel.message}');
-            showToast(state.loginModel.message, ToastState.ERROR);
           }
-          // if (state is ShopLoginSuccessState) {
-          //   if (state.loginModel.status) {
-          //     print(state.loginModel.status);
-          //     print(state.loginModel.data.token);
-          // Fluttertoast.showToast(
-          //     msg: state.loginModel.message,
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.BOTTOM,
-          //     timeInSecForIosWeb: 5,
-          //     backgroundColor: Colors.green,
-          //     textColor: Colors.white,
-          //     fontSize: 16.0);
-          //   }
-          // } else {
-          //   Fluttertoast.showToast(
-          //       msg: state.loginModel.message,
-          //       toastLength: Toast.LENGTH_SHORT,
-          //       gravity: ToastGravity.BOTTOM,
-          //       timeInSecForIosWeb: 1,
-          //       backgroundColor: Colors.red,
-          //       textColor: Colors.white,
-          //       fontSize: 16.0);
-          // }
         },
         builder: (context, state) {
           return Scaffold(
@@ -101,7 +85,9 @@ class ShopLoginScreen extends StatelessWidget {
                             'password',
                             Icons.lock,
                             ShopLoginCubit.get(context).suffix,
+                            //Icons.visibility_outlined,
                             ShopLoginCubit.get(context).isPassword,
+                            //true,
                             TextInputType.emailAddress,
                             true,
                             (value) {
