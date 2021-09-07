@@ -22,6 +22,7 @@ import 'package:messenger_app_flutter/users.dart';
 
 import 'bmi_screen.dart';
 import 'layout/shop_app/cubit/shop_cubit.dart';
+import 'layout/shop_app/favourates/favourates_screen.dart';
 import 'layout/todo_app/todo_layout.dart';
 import 'modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'shared/bloc_observer.dart';
@@ -67,7 +68,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) => NewsCubit()..getBusiness()),
         BlocProvider(create: (context) => AppCubit()..changeAppMode(isDark)),
-        BlocProvider(create: (context) => ShopCubit()..getHomeData())
+        BlocProvider(
+            create: (context) => ShopCubit()
+              ..getHomeData()
+              ..getCategories()
+              ..getFavourates())
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {

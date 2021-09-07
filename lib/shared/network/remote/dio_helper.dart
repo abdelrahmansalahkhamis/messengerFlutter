@@ -20,7 +20,7 @@ class DioHelper {
     dio!.options.headers = dio!.options.headers = {
       'Content-Type': 'application/json',
       //'lang': lang,
-      'Authorization': token!
+      'Authorization': token
     };
     return await dio!.get(url, queryParameters: query);
     //return await dio!.get(url);
